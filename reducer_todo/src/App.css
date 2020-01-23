@@ -41,6 +41,7 @@ p,h1,h2,h3{
   margin: 1%;
   justify-content: center;
   align-items: center;
+  box-shadow: 3px 8px 10px #0000008c;
 }
 .ItemWrapper > button{
   height:100%;
@@ -93,9 +94,18 @@ button{
 }
 .item.completed{
   text-decoration: line-through;
-  background: #cecece;
+  background: #292929;
 }
 .Error p{
   color: #e64944;
   font-weight:bold;
+}
+
+.taskDone{
+  display:flex;
+  justify-content: center;
+  align-items: center;
+}
+.taskDone p{
+  margin-left:5px !important;
 }

@@ -30,7 +30,10 @@ const TodoForm = (props) =>{
             })
         }else{
             props.addToList(task.taskName);
-            setTaskName('')
+            setTaskName({
+                taskName:'',
+                valid:true
+            })
             console.log('Submitting Form... \n Value:', task.taskName)
         }
     }

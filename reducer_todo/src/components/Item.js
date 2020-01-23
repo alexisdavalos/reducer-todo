@@ -1,4 +1,5 @@
 import React from 'react';
+import {FaCheckCircle} from 'react-icons/fa';
 
 const Item = props =>{
     return (
@@ -6,7 +7,7 @@ const Item = props =>{
             <div 
             className={`item${props.task.completed ? " completed" : ""}`}
             onClick={() => props.toggleTask(props.task.id)}>
-                <p>{props.task.task}</p>
+                {props.task.completed ? <div className='taskDone'><FaCheckCircle/><p>{props.task.task}</p></div> :  <div className='taskDone'><p>{props.task.task}</p></div> }
             </div>
             <button onClick={() => props.clearTask(props.task.id)}>Delete</button>
         </div>

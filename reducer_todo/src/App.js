@@ -3,71 +3,43 @@ import TodoList from './components/ToDoList';
 import TodoForm from './components/ToDoForm';
 import './App.css';
 
+//reducers
+import {initialState, toDoReducer} from './reducers/toDoReducer';
+
 function App () {
-  const [toDoList, setToDo] = useState([{
-    task: 'Help',
-    id: 9879879870987098,
-    completed: false
-  }]);
-  console.log('ToDoList', toDoList)
- 
+  const [state, dispatch] = useReducer(toDoReducer, initialState);
+  console.log('Reducer State:', state)
+
   // adds new task to the todo list object
   const addToList = taskName => {
-    const newTask ={
-      task: taskName,
-      id: Date.now(),
-      completed: false
-    };
-    setToDo([...toDoList, newTask]) //spreads in current state of data and adds new task to the end
-    
+    dispatch({type: 'ADD_NEW_TASK', payload: taskName}) //dispatches type and sends new task as payload 
   }
 
   //toggles task completion
   const toggleTask = id =>{
-
-    const newToDoList = toDoList.map(item =>{ //maps through toDoList
-      console.log('After Toggling Task:', item.completed)
-      if(item.id === id){ //if an id on the list matches the id of the item clicked
-        //spreads in the item key value pairs and toggles the completed value
-        return{
-          ...item,
-          completed: !item.completed
-        };
-      }else{
-        return item;
-      }
-    });
-    setToDo(newToDoList)
+    dispatch({type: 'TOGGLE_TASK', payload: id});
   }
   //clears list of completed tasks
   const clearComplete = () =>{
-    console.log('clearing list..', toDoList)
-    const newToDoList = toDoList.filter(item => !item.completed)
-    console.log('setting list to state:', newToDoList);
-    setToDo({
-      toDoList: newToDoList
-    })
+    dispatch({type: 'CLEAR_COMPLETE'});
   }
   //empty the entire list
   const emptyList = () =>{
-    setToDo([])
+    dispatch({type:'EMPTY_LIST'})
   }
 
-  const clearTask = id =>{
-    console.log('clearing out task id:', id)
-    const newToDoList = toDoList.filter(item => item.id !== id)
-    setToDo(newToDoList);
-    
+  const clearTask = id =>{ 
+    dispatch({type: 'CLEAR_TASK', payload: id})   
   }
-    console.log('To Do List State:',toDoList);
+
     return (
       <div className='wrapper'>
         <section>
-        <div><h1>Add New Tasks</h1></div>
-        <TodoForm emptyList ={emptyList} clearComplete={clearComplete} addToList={addToList} toDoList={toDoList}/>
+        <div><h1>Reducer To Do App</h1></div>
+        <TodoForm emptyList ={emptyList} clearComplete={clearComplete} addToList={addToList} toDoList={state}/>
         </section>
         <section className='listSection'>
-          <TodoList clearTask={clearTask} toggleTask={toggleTask} toDoList={toDoList}/>
+          <TodoList clearTask={clearTask} toggleTask={toggleTask} toDoList={state}/>
         </section>
       </div>
     );
